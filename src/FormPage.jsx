@@ -48,7 +48,7 @@ export function FormPage() {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,}$/.test(p);
   const validateName = (name) => /^[A-Za-z]{2,}$/.test(name);
   const validateAadhar = (aadhar) => /^\d{12}$/.test(aadhar);
-  const validatePin = (pan) => /^\d{6}$/.test(pan);
+  const validatePan = (pan) => /^\d{6}$/.test(pan);
   const validatePhone= (phone) => /^\d{10}$/.test(phone);
   const validateForm = () => {
     const newErrors = {};
@@ -70,7 +70,7 @@ export function FormPage() {
     if (!validateAadhar(form.aadhar)) {
       newErrors.aadhar = "Aadhar number must be exactly 12 digits.";
     }
-    if (!validatePin(form.pan)) {
+    if (!validatePan(form.pan)) {
       newErrors.pan = "PAN number must be exactly 6 digits.";
     }
     if(!validatePhone(form.phone)){
