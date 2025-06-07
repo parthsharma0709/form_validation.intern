@@ -48,7 +48,7 @@ export function FormPage() {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,}$/.test(p);
   const validateName = (name) => /^[A-Za-z]{2,}$/.test(name);
   const validateAadhar = (aadhar) => /^\d{12}$/.test(aadhar);
-  const validatePan = (pan) => /^\d{6}$/.test(pan);
+  const validatePan = (pan) =>  /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan);
   const validatePhone= (phone) => /^\d{10}$/.test(phone);
   const validateForm = () => {
     const newErrors = {};
@@ -71,7 +71,7 @@ export function FormPage() {
       newErrors.aadhar = "Aadhar number must be exactly 12 digits.";
     }
     if (!validatePan(form.pan)) {
-      newErrors.pan = "PAN number must be exactly 6 digits.";
+      newErrors.pan = "PAN must be 5 letters, 4 digits, and 1 letter (e.g., ABCDE1234F).";
     }
     if(!validatePhone(form.phone)){
        newErrors.phone = "Phone number must be exactly 10 digits.";
@@ -192,7 +192,7 @@ export function FormPage() {
             value={form.pan}
             error={errors.pan}
             onChange={handleChange}
-            type="number"
+            type="text"
           />
           <InputField
             label="Aadhar No"
