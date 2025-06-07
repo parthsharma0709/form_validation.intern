@@ -1,22 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export function FormPage(){
-   const [form, setForm] = useState({
-       firstname: "",
-       lastname: "",
-       username: "",
-       password: "",
-       email: "",
-       phone: "",
-       countryCode: "+91",
-       pin: "",
-       aadhar: "",
-       country: "",
-       city: "",
-     });
-
-     const countries = ["India", "USA", "UK", "Australia"];
+export function FormPage() {
+  const countries = ["India", "USA", "UK", "Australia"];
   const Cities = {
     India: ["Delhi", "Mumbai", "Agra", "Jaipur", "Jodhpur", "Bangalore"],
     USA: ["California", "New York", "New Orleans", "Florida", "Michigan"],
@@ -34,7 +20,21 @@ export function FormPage(){
   const [errors, setErrors] = useState({});
   const [isShowPassword, setIsShowPassword] = useState(false);
 
-const handleChange = (e) => {
+  const [form, setForm] = useState({
+    firstname: "",
+    lastname: "",
+    username: "",
+    password: "",
+    email: "",
+    phone: "",
+    countryCode: "+91",
+    pan: "",
+    aadhar: "",
+    country: "",
+    city: "",
+  });
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
@@ -48,8 +48,8 @@ const handleChange = (e) => {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,}$/.test(p);
   const validateName = (name) => /^[A-Za-z]{2,}$/.test(name);
   const validateAadhar = (aadhar) => /^\d{12}$/.test(aadhar);
-  const validatePin = (pin) => /^\d{6}$/.test(pin);
-
+  const validatePin = (pan) => /^\d{6}$/.test(pan);
+  const validatePhone= (phone) => /^\d{10}$/.test(phone);
   const validateForm = () => {
     const newErrors = {};
     if (!validateEmail(form.email)) {
@@ -70,8 +70,11 @@ const handleChange = (e) => {
     if (!validateAadhar(form.aadhar)) {
       newErrors.aadhar = "Aadhar number must be exactly 12 digits.";
     }
-    if (!validatePin(form.pin)) {
-      newErrors.pin = "PIN number must be exactly 6 digits.";
+    if (!validatePin(form.pan)) {
+      newErrors.pan = "PAN number must be exactly 6 digits.";
+    }
+    if(!validatePhone(form.phone)){
+       newErrors.phone = "Phone number must be exactly 10 digits.";
     }
 
     setErrors(newErrors);
@@ -88,12 +91,7 @@ const handleChange = (e) => {
     });
   };
 
-
-
-
-
-
-     return (
+  return (
     <div className="min-h-screen w-full bg-slate-600 flex justify-center items-center p-4">
       <div className="w-full max-w-2xl bg-white rounded-xl shadow-md p-6 space-y-4">
         <h2 className="text-2xl font-semibold text-center text-slate-700">
@@ -177,18 +175,22 @@ const handleChange = (e) => {
                 inputMode="numeric"
                 placeholder="Enter phone number"
               />
+             
             </div>
+             {errors.phone && (
+    <p className="text-sm text-red-500">{errors.phone}</p>
+  )}
           </div>
         </div>
 
-        {/* PIN & Aadhar */}
+        {/* PAN & Aadhar */}
         <div className="flex flex-wrap gap-4">
           <InputField
-            label="PIN No"
-            name="pin"
+            label="PAN No"
+            name="pan"
             
-            value={form.pin}
-            error={errors.pin}
+            value={form.pan}
+            error={errors.pan}
             onChange={handleChange}
             type="number"
           />
@@ -249,8 +251,6 @@ const handleChange = (e) => {
       </div>
     </div>
   );
-
-   
 }
 
 function InputField({ label, maxLength ,name, value, onChange, error, type = "text" }) {
